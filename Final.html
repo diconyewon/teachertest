@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나야, OOO교수님 테스트</title>
+    <style>
+        /* 전체 스타일 */
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: white;
+        }
+
+        /* 시작 화면 */
+        #startPage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            text-align: center;
+        }
+
+        /* 이미지 스타일 */
+        #startPage img {
+            width: 500px;
+            height: 500px;
+            margin-bottom: 40px;
+        }
+
+        /* 시작하기 버튼 */
+        #startButton {
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 300px;
+            transition: background-color 0.3s ease;
+            margin-top: 40px;
+        }
+
+        #startButton:hover {
+            background-color: #5A9BD5;
+        }
+
+        /* 시작 텍스트 */
+        #startText {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 퀴즈 페이지 (처음에는 숨겨짐) */
+        #quizPage {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 500px;
+            height: 500px;
+        }
+
+        /* 질문 화면 상단의 진행률 바 */
+        #questionBar {
+            display: flex;
+            height: 30px;
+            margin-bottom: 50px;
+            width: 100%;
+            border-radius: 20px;
+            background: linear-gradient(to right, #FFCC00 0%, #D3D3D3 0%);
+        }
+
+        /* 질문 스타일 */
+        .question {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .question p {
+            font-size: 24px;
+            margin-bottom: 50px;
+        }
+
+        .question button {
+            margin: 15px 0;
+            padding: 15px 35px;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: block;
+            width: 240px;
+            background-color: white;
+            border: 2px solid #A9A9A9; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .question button:hover {
+            background-color: #f0f8ff;
+        }
+
+        /* 결과 페이지 (처음에는 숨겨짐) */
+        #resultPage {
+            display: none;
+            text-align: center;
+            width: 700px;
+            height: 700px;
+        }
+
+        #resultText {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #resultImage {
+            width: 700px;
+            height: 700px;
+            margin-bottom: 40px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 결과보기 버튼 */
+        #resultButton {
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 300px;
+            transition: background-color 0.3s ease;
+        }
+
+        #resultButton:hover {
+            background-color: #5A9BD5;
+        }
+
+        /* 다시하기 버튼 스타일 */
+        #retryButton {
+            background-color: #4682B4;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            width: 300px;
+            transition: background-color 0.3s ease;
+        }
+
+        #retryButton:hover {
+            background-color: #5A9BD5;
+        }
+    </style>
+</head>
+<body>
+    <!-- 시작 화면 -->
+    <div id="startPage">
+        <div id="startText">나와 잘 맞는 디콘과 교수님은?</div>
+        <img src="images/dsu.jpg" alt="시작이미지" />
+        <button id="startButton" onclick="startQuiz()">시작하기</button>
+    </div>
+
+    <!-- 퀴즈 페이지 -->
+    <div id="quizPage">
+        <div id="questionBar"></div>
+
+        <!-- 모든 질문 포함 -->
+        <div id="question1" class="question active">
+            <p>나는 아침형 인간이다.</p>
+            <button type="button" onclick="answerQuestion(1, 'b')">예</button>
+            <button type="button" onclick="answerQuestion(1, 'c')">보통</button>
+            <button type="button" onclick="answerQuestion(1, 'd')">아니오</button>
+        </div>
+        <div id="question2" class="question">
+            <p>나는 스터디 모임을 즐기는 편이다.</p>
+            <button type="button" onclick="answerQuestion(2, 'a')">예</button>
+            <button type="button" onclick="answerQuestion(2, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(2, 'c')">아니오</button>
+        </div>
+        <div id="question3" class="question">
+            <p>나는 공과사를 잘 구분하는 편이다.</p>
+            <button type="button" onclick="answerQuestion(3, 'c')">예</button>
+            <button type="button" onclick="answerQuestion(3, 'a')">보통</button>
+            <button type="button" onclick="answerQuestion(3, 'd')">아니오</button>
+        </div>
+        <div id="question4" class="question">
+            <p>나는 하고자 하는 건 꼭 하는 편이다.</p>
+            <button type="button" onclick="answerQuestion(4, 'd')">예</button>
+            <button type="button" onclick="answerQuestion(4, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(4, 'c')">아니오</button>
+        </div>
+        <div id="question5" class="question">
+            <p>나는 솔직한 편이다.</p>
+            <button type="button" onclick="answerQuestion(5, 'd')">예</button>
+            <button type="button" onclick="answerQuestion(5, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(5, 'a')">아니오</button>
+        </div>
+        <div id="question6" class="question">
+            <p>나는 도시보다 시골이 더 좋다.</p>
+            <button type="button" onclick="answerQuestion(6, 'b')">예</button>
+            <button type="button" onclick="answerQuestion(6, 'c')">보통</button>
+            <button type="button" onclick="answerQuestion(6, 'a')">아니오</button>
+        </div>
+        <div id="question7" class="question">
+            <p>인생은 결국 혼자라고 생각한다.</p>
+            <button type="button" onclick="answerQuestion(7, 'd')">예</button>
+            <button type="button" onclick="answerQuestion(7, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(7, 'a')">아니오</button>
+        </div>
+        <div id="question8" class="question">
+            <p>친구가 표정이 좋지 않다. 이때 먼저 다가가 무슨 일이 있는지 묻는다.</p>
+            <button type="button" onclick="answerQuestion(8, 'a')">예</button>
+            <button type="button" onclick="answerQuestion(8, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(8, 'd')">아니오</button>
+        </div>
+        <div id="question9" class="question">
+            <p>나는 좋아하는 사람이 생기면 티가 나는 편이다.</p>
+            <button type="button" onclick="answerQuestion(9, 'a')">예</button>
+            <button type="button" onclick="answerQuestion(9, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(9, 'c')">아니오</button>
+        </div>
+        <div id="question10" class="question">
+            <p>나는 외출 전에 날씨를 꼭 확인하는 편이다.</p>
+            <button type="button" onclick="answerQuestion(10, 'c')">예</button>
+            <button type="button" onclick="answerQuestion(10, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(10, 'd')">아니오</button>
+        </div>
+        <div id="question11" class="question">
+            <p>주변 사람들을 위해 서프라이즈를 계획해 본 적이 있다.</p>
+            <button type="button" onclick="answerQuestion(11, 'a')">예</button>
+            <button type="button" onclick="answerQuestion(11, 'b')">보통</button>
+            <button type="button" onclick="answerQuestion(11, 'd')">아니오</button>
+        </div>
+        <div id="question12" class="question">
+            <p>나는 하루 중 자신을 위한 시간이 꼭 필요하다.</p>
+            <button type="button" onclick="answerQuestion(12, 'c')">예</button>
+            <button type="button" onclick="answerQuestion(12, 'a')">보통</button>
+            <button type="button" onclick="answerQuestion(12, 'd')">아니오</button>
+        </div>
+
+        <!-- 결과보기 버튼 -->
+        <div id="resultButtonContainer" class="question">
+            <button id="resultButton" onclick="showResultButton()">결과보기</button>
+        </div>
+    </div>
+
+    <!-- 결과 페이지 -->
+    <div id="resultPage">
+        <div id="resultText">유형 테스트 결과는...!</div>
+        <img id="resultImage" src="" alt="결과 이미지">
+        <button id="retryButton" onclick="retryQuiz()">다시하기</button>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let totalQuestions = 12;
+        let answers = { a: 0, b: 0, c: 0, d: 0 };
+
+        function startQuiz() {
+            document.getElementById('startPage').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'block';
+            updateProgressBar();
+        }
+
+        function answerQuestion(questionNumber, answer) {
+            answers[answer]++;
+            // 현재 질문 숨기기
+            document.getElementById(`question${questionNumber}`).classList.remove('active');
+
+            // 다음 질문 표시
+            currentQuestion++;
+            if (currentQuestion <= totalQuestions) {
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+            } else {
+                document.getElementById('resultButtonContainer').style.display = 'block';
+                document.getElementById('questionBar').style.display = 'none';  // 진행률 바 숨기기
+            }
+
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            let progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('questionBar').style.background = `linear-gradient(to right, #FFCC00 ${progress}%, #D3D3D3 ${progress}%)`;
+        }
+
+        function showResultButton() {
+            document.getElementById('resultButtonContainer').style.display = 'none';
+            document.getElementById('quizPage').style.display = 'none';
+            document.getElementById('resultPage').style.display = 'block';
+            document.getElementById('questionBar').style.display = 'none';  // 결과 화면에서 진행률 바 숨기기
+
+            let result;
+            if (answers.a > answers.b && answers.a > answers.c && answers.a > answers.d) {
+                result = "images/result1.jpg";
+            } else if (answers.b > answers.a && answers.b > answers.c && answers.b > answers.d) {
+                result = "images/result2.jpg";
+            } else if (answers.c > answers.a && answers.c > answers.b && answers.c > answers.d) {
+                result = "images/result3.jpg";
+            } else if (answers.d > answers.a && answers.d > answers.b && answers.d > answers.c) {
+                result = "images/result4.jpg";
+            } else {
+                let randomResult = Math.floor(Math.random() * 4) + 1;
+                result = `images/result${randomResult}.jpg`;
+            }
+
+            document.getElementById('resultImage').src = result;
+        }
+
+        function retryQuiz() {
+            currentQuestion = 1;
+            answers = { a: 0, b: 0, c: 0, d: 0 };
+            document.getElementById('resultPage').style.display = 'none';
+            document.getElementById('startPage').style.display = 'flex';
+
+            // 모든 질문 상태 초기화
+            for (let i = 1; i <= totalQuestions; i++) {
+                document.getElementById(`question${i}`).classList.remove('active');
+            }
+            document.getElementById('question1').classList.add('active');
+            document.getElementById('questionBar').style.display = 'flex';  // 진행률 바 다시 보이기
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
