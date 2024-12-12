@@ -33,7 +33,7 @@
         /* 이미지 스타일 */
         #startPage img {
             width: 300px;
-            height:300px;
+            height: 300px;
             margin-bottom: 40px;
         }
 
@@ -80,7 +80,7 @@
             display: flex;
             height: 30px;
             margin-bottom: 50px;
-            width: 100%;
+            width: 350px; /* 이미지보다 약간 길게 설정 */
             border-radius: 20px;
             background: linear-gradient(to right, #FFCC00 0%, #D3D3D3 0%);
         }
@@ -288,18 +288,14 @@
 
         function answerQuestion(questionNumber, answer) {
             answers[answer]++;
-            // 현재 질문 숨기기
             document.getElementById(`question${questionNumber}`).classList.remove('active');
-
-            // 다음 질문 표시
             currentQuestion++;
             if (currentQuestion <= totalQuestions) {
                 document.getElementById(`question${currentQuestion}`).classList.add('active');
             } else {
                 document.getElementById('resultButtonContainer').style.display = 'block';
-                document.getElementById('questionBar').style.display = 'none';  // 진행률 바 숨기기
+                document.getElementById('questionBar').style.display = 'none';
             }
-
             updateProgressBar();
         }
 
@@ -312,8 +308,6 @@
             document.getElementById('resultButtonContainer').style.display = 'none';
             document.getElementById('quizPage').style.display = 'none';
             document.getElementById('resultPage').style.display = 'block';
-            document.getElementById('questionBar').style.display = 'none';  // 결과 화면에서 진행률 바 숨기기
-
             let result;
             if (answers.a > answers.b && answers.a > answers.c && answers.a > answers.d) {
                 result = "images/result1.jpg";
@@ -327,7 +321,6 @@
                 let randomResult = Math.floor(Math.random() * 4) + 1;
                 result = `images/result${randomResult}.jpg`;
             }
-
             document.getElementById('resultImage').src = result;
         }
 
@@ -337,12 +330,11 @@
             document.getElementById('resultPage').style.display = 'none';
             document.getElementById('startPage').style.display = 'flex';
 
-            // 모든 질문 상태 초기화
             for (let i = 1; i <= totalQuestions; i++) {
                 document.getElementById(`question${i}`).classList.remove('active');
             }
             document.getElementById('question1').classList.add('active');
-            document.getElementById('questionBar').style.display = 'flex';  // 진행률 바 다시 보이기
+            document.getElementById('questionBar').style.display = 'flex';
         }
     </script>
 </body>
