@@ -180,7 +180,7 @@
     <!-- 시작 화면 -->
     <div id="startPage">
         <div id="startText">나와 잘 맞는 디콘과 교수님은?</div>
-        <img src="/teachertest/images/dsu.jpg" alt="시작이미지" />
+        <img src="images/dsu.jpg" alt="시작이미지" />
         <button id="startButton" onclick="startQuiz()">시작하기</button>
     </div>
 
@@ -316,16 +316,16 @@
 
             let result;
             if (answers.a > answers.b && answers.a > answers.c && answers.a > answers.d) {
-                result = "/teachertest/images/result1.jpg";
+                result = "images/result1.jpg";
             } else if (answers.b > answers.a && answers.b > answers.c && answers.b > answers.d) {
-                result = "/teachertest/images/result2.jpg";
+                result = "images/result2.jpg";
             } else if (answers.c > answers.a && answers.c > answers.b && answers.c > answers.d) {
-                result = "/teachertest/images/result3.jpg";
+                result = "images/result3.jpg";
             } else if (answers.d > answers.a && answers.d > answers.b && answers.d > answers.c) {
-                result = "/teachertest/images/result4.jpg";
+                result = "images/result4.jpg";
             } else {
                 let randomResult = Math.floor(Math.random() * 4) + 1;
-                result = `/teachertest/images/result${randomResult}.jpg`;
+                result = `images/result${randomResult}.jpg`;
             }
 
             document.getElementById('resultImage').src = result;
